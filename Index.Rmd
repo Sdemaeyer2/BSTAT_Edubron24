@@ -14,7 +14,7 @@ library(flexdashboard)
 
 # Intro {.sidebar}
 
-This site bundles all the material used for the OJO workshop [BSTAT_Edubron24]{style="color: #447099"}. 
+This site bundles all the material used for the OJO workshop [BSTAT_Edubron24]{style="color: #EB6864"}. 
 
 ---
 
