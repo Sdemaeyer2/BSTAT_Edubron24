@@ -56,10 +56,9 @@ Participants will be introduced to a workflow for Bayesian analyses in the open-
 ### Rooms
 | When?  | Where    |
 |:--------|:-------|
-|  | |
-|  | |
-|  | |
-|  | |
+| Monday February 5 (9:30 am - 4:00 pm) | Room S.C.102|
+| Tuesday February 6 (9:30 am - 4:00 pm) |Room S.C.102 |
+
 
 # Preparation
 
