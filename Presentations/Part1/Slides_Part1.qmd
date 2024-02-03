@@ -208,7 +208,7 @@ $$
 P(\theta|data) = \frac{P(data|\theta)P(\theta)}{P(data)}
 $$ with
 
--   $P(data|\theta)$ : the [likelihood]{style="color: #447099"} of the data given our model $\theta$
+-   $P(data|\theta)$ : the [likelihood]{style="color: #447099"} of the data given the parameters in the model $\theta$
 -   $P(\theta)$ : our [prior]{style="color: #447099"} belief about values for the model parameters
 -   $P(\theta|data)$: the [posterior]{style="color: #447099"} probability for model parameter values
 :::
@@ -220,7 +220,7 @@ meme from <https://twitter.com/ChelseaParlett/status/1421291716229746689?s=20>
 
 ## Likelihood
 
-$P(data|\theta)$ : the [likelihood]{style="color: #447099"} of the data given our model $\theta$
+$P(data|\theta)$ : the [likelihood]{style="color: #447099"} of the data given the parameters in the model $\theta$
 
 This part is about our [MODEL]{style="background-color: yellow; color: red"} and the parameters (aka the unknowns) in that model
 
@@ -372,7 +372,7 @@ options(scipen = 1000000)
 # mu = 180 ; sigma = 15
 # remember MT contains our data
 Likelihood <- 
-  sum(
+  prod(
       dnorm(
         MT ,
         mean=180 ,
@@ -423,7 +423,7 @@ What is the [**posterior probability**]{style="color: #447099"} of [mu = 210]{st
 # mu = 210 ; sigma = 30
 # remember MT contains our data
 Likelihood <- 
-  sum(
+  prod(
       dnorm(
         MT ,
         mean=210 ,
@@ -959,4 +959,3 @@ Time to think about `your data` and research question
 -   What are your `prior beliefs` about each of the parameters?
 -   Minimum and maximum values assumed for each parameter?
 -   Do all potential parameter values have a similar probability?
-
