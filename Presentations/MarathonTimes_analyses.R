@@ -42,7 +42,7 @@ Mod_MT1 <- brm(
 MarathonTimes_Mod1 <- brm(                        
   MarathonTimeM ~ 1, # We only model an intercept 
   data = MarathonData,                         
-  backend = "cmdstanr",  
+  #backend = "cmdstanr",  
   cores = 4,
   seed = 1975                          
 )
@@ -55,7 +55,11 @@ MarathonTimes_Mod2 <- brm(
   seed = 1975                          
 )
 
+posterior_PD <- as_draws_df(MarathonTimes_Mod1)
+
 summary(MarathonTimes_Mod2)
+
+pp_check(MarathonTimes_Mod2) 
 
 # save the models
 

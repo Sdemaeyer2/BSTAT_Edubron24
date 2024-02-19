@@ -96,7 +96,7 @@ Once the models are estimated, compare the models on their fit making use of the
 
 <i>Solution</i>
 
-The following code-block shows how the models can be estimated and compared on their fit. Notice how I first create a set of dummy-variables for the categories of the `occasion` and the `condition` variables. This makes it a bit harder (more code writing) to define my model but it generates some flexibility later on. For instance, when thinking about setting priors, I can set priors for each of the effects of these dummy variables. Also, it will result in shorter names of parameters in my model in the resulting objects for the model.
+The following code-block shows how the models can be estimated and compared on their fit. Notice how I first create a set of dummy-variables for the categories of the `occasion` and the `condition` variables. This makes it a bit harder (more code writing) to define my model, but it generates some flexibility later on. For instance, when thinking about setting priors, I can set priors for each of the effects of these dummy variables. Also, it will result in shorter names of parameters in my model in the resulting objects for the model.
 
 ```{r}
 #| echo: true
@@ -240,7 +240,7 @@ Based on the model comparison we can conclude that the final model (M3) fits the
 ::: callout-note
 ## Note
 
-When doing the loo comparison you might encounter a warning message saying that there is one or more observations showing a Pareto K higher than .7. What this means is that the leave-one-out cross-validation might be biased. The warning message suggest 'moment matching' as potential solution. You could try this. In my experience, the impact of one or two observations suffering a Pareto K value that is too high is rather small or even negligible. But it is always better to double check. Also, be aware that the moment matching solution creates a very slow estimation of the loo!
+When doing the loo comparison you might encounter a warning message saying that there is one or more observations showing a Pareto K higher than .7. What this means is that the leave-one-out cross-validation might be biased. The warning message suggest 'moment matching' as potential solution. You could try this. In my experience, the impact of one or two observations suffering a Pareto K value that is too high, is rather small or even negligible. But it is always better to double check. Also, be aware that the moment matching solution creates a very slow estimation of the loo!
 :::
 
 ------------------------------------------------------------------------
@@ -291,7 +291,7 @@ For all the beta's (fixed effects) `brms` uses a flat prior. Actually, that is s
 
 As we have no prior idea about the directions of the effects of condition nor of the effect of time, we could use a prior distribution centred around 0 (most probability assigned to no effect). 
 
-Next, we have to think about setting the width of the prior. For instance, if we use a normal distribution to express our prior belief, we have to think about the sd for the normal distribution that captures our prior belief. In our case, the sd has to be high enough to assign some probability to even very strong positive and negative effects. Here, it is important that we know our data well. I mean, we need to know the scale of our dependent variable. This variable has an sd of `r sd(Subtitles$fluency, na.rm=T)`. So, now we can use Effect Sizes as a reference frame. Remember, an effect size of 0.8 (or higher) indicates a stron effect (Cohen's d). So, on our scale of the `fluency` variable an effect of 5.7 (= 7.1 * 0.8) indicates a strong effect. Let's use the value 5.7 as our sd for priors for the effects of our dummy variables. Visually the prior would look like this:
+Next, we have to think about setting the width of the prior. For instance, if we use a normal distribution to express our prior belief, we have to think about the sd for the normal distribution that captures our prior belief. In our case, the sd has to be high enough to assign some probability to even very strong positive and negative effects. Here, it is important that we know our data well. I mean, we need to know the scale of our dependent variable. This variable has an sd of `r sd(Subtitles$fluency, na.rm=T)`. So, now we can use Effect Sizes as a reference frame. Remember, an effect size of 0.8 (or higher) indicates a strong effect (Cohen's d). So, on our scale of the `fluency` variable an effect of 5.7 (= 7.1 * 0.8) indicates a strong effect. Let's use the value 5.7 as our sd for priors for the effects of our dummy variables. Visually the prior would look like this:
 
 ```{r}
 # Setting a plotting theme
@@ -318,9 +318,9 @@ Prior_betas <- ggplot( ) +
 Prior_betas
 ```
 
-Notice that even effects of -10 and 10 (almast effect sizes of -2 and 2) still get a decent amount of probability in our prior density function. 
+Notice that even effects of -10 and 10 (almost effect sizes of -2 and 2) still get a decent amount of probability in our prior density function. 
 
-Let's set these priors and try to apply a pp_check(). Notice that I set the priors for all slopes (`class = "b"`) at once.
+Let's set these priors and try to apply a pp_check(). Notice that I set the priors for all slopes (`class = "b"`) at once. For the intercept I stick with the default prior by `brms`. 
 
 ```{r}
 #| message: false
@@ -380,7 +380,7 @@ Custom_prior <- c(
   )
 )
 
-M3 <- brm(
+M3b <- brm(
   fluency ~ 1 + Occ2*FL + Occ2*MT + Occ3*FL + Occ3*MT + (1|student),
   data = Subtitles,
   cores = 4,
@@ -458,14 +458,13 @@ Next, we can check the R-hat statistic for each of the parameters. With the foll
 #| echo: true
 #| message: false
 #| error: false
-#| cache: false
 
 library(bayesplot)
 
-mcmc_rhat(
-  rhat(M3b), 
+bayesplot::mcmc_rhat(brms::rhat(M3b), 
   size = 1) +
   yaxis_text(hjust = 1) # to print parameter names
+
 ```
 
 None of the parameters shows a high R-hat statistic. They all are below the threshold of 1.05, indicating that all parameters converged well.
@@ -479,7 +478,7 @@ Time to get insight in the amount of autocorrelation. A first check is plotting 
 #| cache: false
 
 mcmc_neff(
-  neff_ratio(M3b)
+  brms::neff_ratio(M3b)
   ) + 
   yaxis_text(hjust = 1)
 ```
